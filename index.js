@@ -37,5 +37,16 @@ app.post("/create-checkout-session", async (req, res) => {
   }
 });
 
+//ROUTE: Stripe Test Connection
+app.get("/test-stripe", async (req, res) => {
+  try {
+    const balance = await stripe.balance.retrieve();
+    res.json({ status: "success", balance });
+  } catch (error) {
+    res.status(500).json({ status: "error", message: error.message });
+  }
+});
+
+// DO NOT MOVE THIS — it must be last
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Running on port ${PORT}`));
